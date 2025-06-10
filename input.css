@@ -1,0 +1,51 @@
+*{
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+html,body{
+    height: 100%;
+    width: 100%;
+    background-color: rgb(117, 117, 117);
+}
+
+#root{
+    display: flex;
+    flex-direction: column;
+    /* align-items: center; */
+    border: 1px solid black;
+    width: fit-content;
+    margin: auto;
+    /* justify-content: center; */      /* not working when we set width to auto */
+}
+
+.squareRow{
+    display: flex;
+    /* flex-direction: column; */
+    /* background-color: gray; */
+    /* margin-bottom: 2vh; */
+    /* width: 70vw; */
+    /* height: 8vh; */
+}
+
+.black{
+    background-color: #779556;
+}
+
+.white{
+    background-color: #EBECD0;
+}
+
+.square{
+    height: 70px;
+    width: 70px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.peices{
+    height: 8vh;
+    width: 8vw;
+}
