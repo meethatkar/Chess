@@ -49,3 +49,6 @@ html,body{
     /* height: 8vh; */
     width: 100%;
 }
+.peices:hover{
+    cursor:grab;
+}
