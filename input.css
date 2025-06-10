@@ -46,6 +46,6 @@ html,body{
 }
 
 .peices{
-    height: 8vh;
-    width: 8vw;
+    /* height: 8vh; */
+    width: 100%;
 }
