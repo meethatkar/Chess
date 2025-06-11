@@ -52,3 +52,13 @@ html,body{
 .peices:hover{
     cursor:grab;
 }
+
+.highlight{
+    height: 30%;
+    width: 30%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: rgba(0, 0, 0, 0.068);
+    border-radius: 50%;
+}

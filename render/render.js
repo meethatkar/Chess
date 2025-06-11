@@ -3,7 +3,9 @@
 
 import * as peices from "../Data/peices.js"     //this is easy, as if not done this then nee dot write import statement 12 times
 import { ROOT_DIV } from "../helper/constants.js"
+import { globalState } from "../index.js";
 
+//USE TO SET INTIAL POSITION OF PEICES
 function peiceRender(data){
     data.forEach((elem)=>{
         elem.squareRowArr.forEach((square)=>{
@@ -77,5 +79,28 @@ function initGameRender(data){
         ROOT_DIV.appendChild(rowElem);      
     });
 }
-export {initGameRender};
-export {peiceRender};
+
+//RENDER HIGHLIGHT CIRCLE
+function renderHighlight(squareID){
+    const highlightDiv = document.createElement("div");
+    highlightDiv.classList.add("highlight");
+    let parentDiv = document.getElementById(squareID);        
+    parentDiv.appendChild(highlightDiv);
+    console.log("clear");
+    
+}
+
+function clearHighlight(){
+    let flatData = globalState.map(row=>row.squareRowArr).flat();
+    console.log(flatData);
+    flatData.forEach((el)=>{
+        // console.log(el.highlight);
+        if(el.highlight){
+            const v = document.getElementById(el.id)
+            console.log(v);
+            v.innerHTML=""
+        }
+    })
+}
+
+export {initGameRender, peiceRender, renderHighlight, clearHighlight};
