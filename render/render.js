@@ -82,11 +82,11 @@ function initGameRender(data){
 
 //RENDER HIGHLIGHT CIRCLE
 function renderHighlight(squareID){
+    // document.getElementById(squareID).style.backgroundColor = "yellow"
     const highlightDiv = document.createElement("div");
     highlightDiv.classList.add("highlight");
     let parentDiv = document.getElementById(squareID);        
     parentDiv.appendChild(highlightDiv);
-    console.log("clear");
     
 }
 
@@ -96,10 +96,11 @@ function clearHighlight(){
     flatData.forEach((el)=>{
         // console.log(el.highlight);
         if(el.highlight){
-            const v = document.getElementById(el.id)
-            console.log(v);
-            v.innerHTML=""
+            const parentDiv = document.getElementById(el.id)
+            parentDiv.innerHTML=""
+            el.highlight=false;
         }
+        document.getElementById(el.id).classList.remove("whiteHighlight");
     })
 }
 
