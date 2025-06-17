@@ -9,6 +9,7 @@ function square(color, id, peice, highlight=false) {
     return { color, id, peice, highlight, setHighlight };            //advance-objects-literals concept
 }
 
+//INITIAL SETTING OF BOARD
 function squareRow(rowID) {
     const squareRowArr = [];
     const abcdVal = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'];
