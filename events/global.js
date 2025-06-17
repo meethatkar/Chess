@@ -15,16 +15,14 @@ function setSelfHighlight(val){
     //MADE THIS FUNCTION SO, 2ND TIME WHEN CLICKED THE CODE WORKS PERFECTLY    
 }
 
-
+//Function that will be executed when white pawn is clicked
 function whitePawnClicked(elem) {        
     //HERE {PEICE} TAKE AS ARGS IS KNOW AS DESTRUCTURING
     let peice = elem.peice;
     console.log("parent: ",elem.parentNode);
     
     var curr_pos = peice.current_pos;
-    if(peice == selfHighlight){
-        console.log("2nd tame", peice, selfHighlight);
-        
+    if(peice == selfHighlight){        
     document.getElementById(curr_pos).classList.remove("whiteHighlight") ;
     clearHighlight();
     selfHighlight = null;
@@ -75,6 +73,64 @@ function whitePawnClicked(elem) {
 
 }
 
+//Function that will be executed when black pawn is clicked
+function blackPawnClicked(elem) {        
+    //HERE {PEICE} TAKE AS ARGS IS KNOW AS DESTRUCTURING
+    let peice = elem.peice;
+    console.log("parent: ",elem.parentNode);
+    
+    var curr_pos = peice.current_pos;
+    if(peice == selfHighlight){        
+    document.getElementById(curr_pos).classList.remove("whiteHighlight") ;
+    clearHighlight();
+    selfHighlight = null;
+    return;         //WROTE TO STOP FUNCTION EXECUTION HERE ONLY.
+    }    
+            console.log("1st tame", peice, selfHighlight);
+
+    clearHighlight();
+    // debugger;
+    selfHighlight = peice;
+    console.log("assigned: ",selfHighlight);
+    
+    document.getElementById(curr_pos).classList.add("whiteHighlight") ;
+    isMove = peice;             // this peice should move '
+        // selfHighlight = peice
+    // for initial position movement only
+    if (curr_pos[1] == "7") {
+        
+        var highlightSquareIds = [
+            `${curr_pos[0]}${Number(curr_pos[1]) - 2}`,              //THEY ARE TEMPLATE  LITERALS
+            `${curr_pos[0]}${Number(curr_pos[1]) - 1}`               //NEED TO TYPECAST IN NUMBER AS, OTHERWISE IT WILL CONCATE IT WITH STRING
+        ]
+        highlightSquareIds.forEach((elem) => {                //MADE THIS FOREACH, BECAUSE RENDERHIGHLIGHT() TAKES SINGLE NUMBER AS ARGUMENT, OS CALLING 2 TIMES PASSING SINGLE PARAMETER.
+        globalState.forEach((raw) => {
+            raw.squareRowArr.forEach((rawSquare) => {
+                if (rawSquare.id == elem) {
+                    rawSquare.setHighlight(rawSquare);
+                }
+            })
+        })
+    })
+    }    
+    // WEE RUN WHEN PEICES ARE NOT ON INITAL POSITION
+    else{        
+        var highlightSquareIds = [
+            `${curr_pos[0]}${Number(curr_pos[1]) - 1}`,              //THEY ARE TEMPLATE LITERALS 
+        ]
+        highlightSquareIds.forEach((elem) => {                //MADE THIS FOREACH, BECAUSE RENDERHIGHLIGHT() TAKES SINGLE NUMBER AS ARGUMENT, OS CALLING 2 TIMES PASSING SINGLE PARAMETER.
+        globalState.forEach((raw) => {
+            raw.squareRowArr.forEach((rawSquare) => {
+                if (rawSquare.id == elem) {
+                    rawSquare.setHighlight(rawSquare);
+                }
+            })
+        })
+    })
+    }
+
+}
+
 //this identifies clicks made on peices.
 function globalEvent() {
     ROOT_DIV.addEventListener("click", (dets) => {        
@@ -88,6 +144,9 @@ function globalEvent() {
                     if (elem.peice.peice_name == "pawn_White") {
                         // debugger;
                         whitePawnClicked(elem); 
+                    }
+                    else if(elem.peice.peice_name == "pawn_Black"){
+                        blackPawnClicked(elem);
                     }
                 }
             })
