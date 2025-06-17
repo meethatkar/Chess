@@ -4,6 +4,48 @@
 import * as peices from "../Data/peices.js"     //this is easy, as if not done this then nee dot write import statement 12 times
 import { ROOT_DIV } from "../helper/constants.js"
 import { globalState } from "../index.js";
+import { setSelfHighlight } from "../events/global.js";
+
+// MOVE PEICE METHOD
+function movePeice(peice, id){
+    // console.log(peice.current_pos+" "+id);  
+    const flatArr = globalState.map(rows => rows.squareRowArr).flat();          //made 2D array into 1D array   AND  used .map() to extract squareRowArr from globalState object.    
+    // THIS LOOP IS RUNED TO CHANGED DATA
+    flatArr.forEach((sqr)=>{
+        // console.log(sqr);
+        if(sqr.id==peice.current_pos){
+            // console.log("found");
+            clearHighlight();           //IF YOU REMOVE THIS, THEN GAME WILL BE MALFUNCTION, CAUSE  newPosition.innerHtml will become " " in clearHighlight(), so need to call this before we assign perviousPosition into newPosition
+            delete sqr.peice;
+            // console.log("old");
+            // console.log(sqr);
+            
+        }
+        if(sqr.id==id){
+            // console.log("id found");            
+            sqr.peice = peice;
+            // sqr.peice.current_pos = id;
+                        //change
+            // console.log("new ",sqr.peice);
+
+            // console.log(sqr);
+            
+        }
+    })
+    //THIS IS DONE TO CHANGE HTML
+    let previousPosition = document.getElementById(peice.current_pos);
+    let newPosition = document.getElementById(id);
+    
+    newPosition.innerHTML = previousPosition.innerHTML;
+    previousPosition.innerHTML = "";
+    // console.log(previousPosition, newPosition);
+    peice.current_pos = id;                 //THIS IS SET SO FURTHER MOVES CAN BE PLAYED
+    setSelfHighlight("null");       
+    // ABOVE IS SET SO, FIRST TIME CLICKED WILL NOT EXECUTE "if(peice == selfHighlight)"
+    // console.log(globalState);
+    
+} 
+
 
 //USE TO SET INTIAL POSITION OF PEICES
 function peiceRender(data){
@@ -83,7 +125,7 @@ function initGameRender(data){
 //RENDER HIGHLIGHT CIRCLE
 function renderHighlight(squareID){
     // document.getElementById(squareID).style.backgroundColor = "yellow"
-    const highlightDiv = document.createElement("div");
+    const highlightDiv = document.createElement("span");
     highlightDiv.classList.add("highlight");
     let parentDiv = document.getElementById(squareID);        
     parentDiv.appendChild(highlightDiv);
@@ -92,11 +134,11 @@ function renderHighlight(squareID){
 
 function clearHighlight(){
     let flatData = globalState.map(row=>row.squareRowArr).flat();
-    console.log(flatData);
+    // console.log(flatData);
     flatData.forEach((el)=>{
         // console.log(el.highlight);
         if(el.highlight){
-            const parentDiv = document.getElementById(el.id)
+            const parentDiv = document.getElementById(el.id);            
             parentDiv.innerHTML=""
             el.highlight=false;
         }
@@ -104,4 +146,4 @@ function clearHighlight(){
     })
 }
 
-export {initGameRender, peiceRender, renderHighlight, clearHighlight};
+export {initGameRender, peiceRender, renderHighlight, clearHighlight, movePeice};
