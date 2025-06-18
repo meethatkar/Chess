@@ -14,24 +14,14 @@ function movePeice(peice, id){
     flatArr.forEach((sqr)=>{
         // console.log(sqr);
         if(sqr.id==peice.current_pos){
-            // console.log("found");
             clearHighlight();           //IF YOU REMOVE THIS, THEN GAME WILL BE MALFUNCTION, CAUSE  newPosition.innerHtml will become " " in clearHighlight(), so need to call this before we assign perviousPosition into newPosition
             delete sqr.peice;
-            // console.log("old");
-            // console.log(sqr);
-            
         }
         if(sqr.id==id){
-            // console.log("id found");            
             sqr.peice = peice;
-            // sqr.peice.current_pos = id;
-                        //change
-            // console.log("new ",sqr.peice);
-
-            // console.log(sqr);
-            
         }
     })
+
     //THIS IS DONE TO CHANGE HTML
     let previousPosition = document.getElementById(peice.current_pos);
     let newPosition = document.getElementById(id);
