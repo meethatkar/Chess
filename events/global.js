@@ -1,6 +1,7 @@
 import { ROOT_DIV } from "../helper/constants.js";
 import { globalState } from "../index.js";
 import { renderHighlight, clearHighlight, movePeice } from "../render/render.js";
+import { opponenetExits } from "../helper/commonHelper.js";
 
 // MOVE STATE
 let isMove = null;
@@ -11,16 +12,13 @@ var selfHighlight = null;
 // }
 function setSelfHighlight(val){
     selfHighlight = val;
-    console.log("value set");
     //MADE THIS FUNCTION SO, 2ND TIME WHEN CLICKED THE CODE WORKS PERFECTLY    
 }
 
 //Function that will be executed when white pawn is clicked
 function whitePawnClicked(elem) {        
     //HERE {PEICE} TAKE AS ARGS IS KNOW AS DESTRUCTURING
-    let peice = elem.peice;
-    console.log("parent: ",elem.parentNode);
-    
+    let peice = elem.peice;    
     var curr_pos = peice.current_pos;
     if(peice == selfHighlight){        
     document.getElementById(curr_pos).classList.remove("whiteHighlight") ;
@@ -28,19 +26,16 @@ function whitePawnClicked(elem) {
     selfHighlight = null;
     return;         //WROTE TO STOP FUNCTION EXECUTION HERE ONLY.
     }    
-            console.log("1st tame", peice, selfHighlight);
 
     clearHighlight();
     // debugger;
-    selfHighlight = peice;
-    console.log("assigned: ",selfHighlight);
-    
+    selfHighlight = peice;    
     document.getElementById(curr_pos).classList.add("whiteHighlight") ;
     isMove = peice;             // this peice should move '
         // selfHighlight = peice
     // for initial position movement only
+
     if (curr_pos[1] == "2") {
-        
         var highlightSquareIds = [
             `${curr_pos[0]}${Number(curr_pos[1]) + 1}`,              //THEY ARE TEMPLATE  LITERALS
             `${curr_pos[0]}${Number(curr_pos[1]) + 2}`               //NEED TO TYPECAST IN NUMBER AS, OTHERWISE IT WILL CONCATE IT WITH STRING
@@ -55,8 +50,34 @@ function whitePawnClicked(elem) {
         })
     })
     }    
+
     // WEE RUN WHEN PEICES ARE NOT ON INITAL POSITION
-    else{        
+    else{
+        
+        let col1Num = curr_pos[0].charCodeAt(0);
+        
+        if(col1Num>=98 && col1Num<=103){            
+            let col1 = `${String.fromCharCode(curr_pos[0].charCodeAt(0) - 1)}${Number(curr_pos[1]) + 1}`;
+            //curr_pos[0] will return alphabets  & curr_pos[1] returns row number.
+            let col2 = `${String.fromCharCode(curr_pos[0].charCodeAt(0) + 1)}${Number(curr_pos[1]) + 1}`
+            console.log(opponenetExits(col1, "white"));
+            ;      //passing current_pos OR square ID and color
+            console.log(opponenetExits(col2, "white"));
+            ;
+        }
+        else if(col1Num==97){           // if peice is on first colum then
+            let col1 = `${String.fromCharCode(curr_pos[0].charCodeAt(0) + 1)}${Number(curr_pos[1]) + 1}`;
+            opponenetExits(col1, "white");      //passing current_pos OR square ID and color
+
+        }
+        else if(col1Num==104){
+            let col2 = `${String.fromCharCode(curr_pos[0].charCodeAt(0) - 1)}${Number(curr_pos[1]) + 1}`
+            opponenetExits(col2, "white");      //passing current_pos OR square ID and color
+
+        }
+
+        // console.log(col1,col2);
+
         var highlightSquareIds = [
             `${curr_pos[0]}${Number(curr_pos[1]) + 1}`,              //THEY ARE TEMPLATE LITERALS 
         ]
@@ -77,7 +98,6 @@ function whitePawnClicked(elem) {
 function blackPawnClicked(elem) {        
     //HERE {PEICE} TAKE AS ARGS IS KNOW AS DESTRUCTURING
     let peice = elem.peice;
-    console.log("parent: ",elem.parentNode);
     
     var curr_pos = peice.current_pos;
     if(peice == selfHighlight){        
@@ -86,12 +106,10 @@ function blackPawnClicked(elem) {
     selfHighlight = null;
     return;         //WROTE TO STOP FUNCTION EXECUTION HERE ONLY.
     }    
-            console.log("1st tame", peice, selfHighlight);
 
     clearHighlight();
     // debugger;
     selfHighlight = peice;
-    console.log("assigned: ",selfHighlight);
     
     document.getElementById(curr_pos).classList.add("whiteHighlight") ;
     isMove = peice;             // this peice should move '
