@@ -53,6 +53,12 @@ function peiceRender(data){
     })
 }
 
+// USE TO HIGHLIGHT PEICES THAT CAN BE CAPTURE.
+function highlightOpponent(id){       //PARAM:- ID OF SQUARE BLOCK
+    console.log(id);
+    document.getElementById(id).classList.add("capture-highlight");
+}
+
 // THIS FUCNTION WILL BE CALLED WHEN GAME STARTS
 function initGameRender(data){
     data.forEach(element => {       //first array and so on
@@ -136,4 +142,4 @@ function clearHighlight(){
     })
 }
 
-export {initGameRender, peiceRender, renderHighlight, clearHighlight, movePeice};
+export {initGameRender, peiceRender, renderHighlight, clearHighlight, movePeice, highlightOpponent};

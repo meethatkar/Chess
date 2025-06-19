@@ -70,3 +70,6 @@ html,body{
     background-color: rgba(0, 0, 0, 0.164);
     border-radius: 50%;
 }
+.capture-highlight{
+    background-color: rgb(247, 80, 80);
+}
