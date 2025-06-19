@@ -28,6 +28,7 @@ function whitePawnClicked(elem) {
     }    
 
     clearHighlight();
+    var highlightSquareIds = [];
     // debugger;
     selfHighlight = peice;    
     document.getElementById(curr_pos).classList.add("whiteHighlight") ;
@@ -36,7 +37,7 @@ function whitePawnClicked(elem) {
     // for initial position movement only
 
     if (curr_pos[1] == "2") {
-        var highlightSquareIds = [
+        highlightSquareIds = [
             `${curr_pos[0]}${Number(curr_pos[1]) + 1}`,              //THEY ARE TEMPLATE  LITERALS
             `${curr_pos[0]}${Number(curr_pos[1]) + 2}`               //NEED TO TYPECAST IN NUMBER AS, OTHERWISE IT WILL CONCATE IT WITH STRING
         ]
@@ -55,32 +56,34 @@ function whitePawnClicked(elem) {
     else{
         
         let col1Num = curr_pos[0].charCodeAt(0);
-        
+        let captureIds =[];
         if(col1Num>=98 && col1Num<=103){            
             let col1 = `${String.fromCharCode(curr_pos[0].charCodeAt(0) - 1)}${Number(curr_pos[1]) + 1}`;
             //curr_pos[0] will return alphabets  & curr_pos[1] returns row number.
             let col2 = `${String.fromCharCode(curr_pos[0].charCodeAt(0) + 1)}${Number(curr_pos[1]) + 1}`
-            console.log(opponenetExits(col1, "white"));
-            ;      //passing current_pos OR square ID and color
-            console.log(opponenetExits(col2, "white"));
-            ;
+            captureIds.push(col1);
+            captureIds.push(col2);
         }
         else if(col1Num==97){           // if peice is on first colum then
             let col1 = `${String.fromCharCode(curr_pos[0].charCodeAt(0) + 1)}${Number(curr_pos[1]) + 1}`;
-            opponenetExits(col1, "white");      //passing current_pos OR square ID and color
+            // opponenetExits(col1, "white");      //passing current_pos OR square ID and color
+            captureIds.push(col1);
 
         }
         else if(col1Num==104){
             let col2 = `${String.fromCharCode(curr_pos[0].charCodeAt(0) - 1)}${Number(curr_pos[1]) + 1}`
-            opponenetExits(col2, "white");      //passing current_pos OR square ID and color
-
+            // opponenetExits(col2, "white");      //passing current_pos OR square ID and color
+            captureIds.push(col2);
         }
 
-        // console.log(col1,col2);
-
-        var highlightSquareIds = [
-            `${curr_pos[0]}${Number(curr_pos[1]) + 1}`,              //THEY ARE TEMPLATE LITERALS 
-        ]
+        captureIds.forEach((id)=>{
+            if(opponenetExits(id,"white")){
+                highlightSquareIds.push(id);
+            }
+        })     
+        
+        highlightSquareIds.push(`${curr_pos[0]}${Number(curr_pos[1]) + 1}`)              //THEY ARE TEMPLATE LITERALS 
+        
         highlightSquareIds.forEach((elem) => {                //MADE THIS FOREACH, BECAUSE RENDERHIGHLIGHT() TAKES SINGLE NUMBER AS ARGUMENT, OS CALLING 2 TIMES PASSING SINGLE PARAMETER.
         globalState.forEach((raw) => {
             raw.squareRowArr.forEach((rawSquare) => {

@@ -1,6 +1,7 @@
 import { renderHighlight } from "../render/render.js";
 
 function square(color, id, peice, highlight=false) {
+    // Highlight Circle (further steps)
     const setHighlight = (highlightData) => {
         // console.log(highlightData);
         highlightData.highlight = true;
