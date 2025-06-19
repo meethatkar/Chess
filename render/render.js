@@ -32,8 +32,7 @@ function movePeice(peice, id){
     peice.current_pos = id;                 //THIS IS SET SO FURTHER MOVES CAN BE PLAYED
     setSelfHighlight("null");       
     // ABOVE IS SET SO, FIRST TIME CLICKED WILL NOT EXECUTE "if(peice == selfHighlight)"
-    // console.log(globalState);
-    
+    // console.log(globalState);  
 } 
 
 
