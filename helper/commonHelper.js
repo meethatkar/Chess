@@ -1,5 +1,8 @@
 import { globalState } from "../index.js";
 import { highlightOpponent } from "../render/render.js";
+import { setopponentHighlightState, getopponentHighlightState } from "../events/global.js";
+
+
 
 function opponenetExits(id, color){
     // console.log(id,color);
@@ -14,7 +17,15 @@ function opponenetExits(id, color){
                 console.log(elem);
                 
                 // console.log(document.getElementById(elem.id));
-                highlightOpponent(elem.id);       //highlighting done by this function
+                // let state = getopponentHighlightState()
+                console.log(getopponentHighlightState());
+                
+                if(getopponentHighlightState()){
+                    setopponentHighlightState(false);       //highlighting done by this function
+                }
+                else{
+                    setopponentHighlightState(true);
+                }
                 // document.getElementById(elem.id).classList.add("capture-highlight");
                 return true;            
             }            

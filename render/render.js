@@ -4,7 +4,7 @@
 import * as peices from "../Data/peices.js"     //this is easy, as if not done this then nee dot write import statement 12 times
 import { ROOT_DIV } from "../helper/constants.js"
 import { globalState } from "../index.js";
-import { setSelfHighlight } from "../events/global.js";
+import { setSelfHighlight, setopponentHighlightState } from "../events/global.js";
 
 // MOVE PEICE METHOD
 function movePeice(peice, id){
@@ -31,6 +31,7 @@ function movePeice(peice, id){
     // console.log(previousPosition, newPosition);
     peice.current_pos = id;                 //THIS IS SET SO FURTHER MOVES CAN BE PLAYED
     setSelfHighlight("null");       
+    // setopponentHighlightState(false);
     // ABOVE IS SET SO, FIRST TIME CLICKED WILL NOT EXECUTE "if(peice == selfHighlight)"
     // console.log(globalState);  
 } 
@@ -53,6 +54,7 @@ function peiceRender(data){
 }
 
 // USE TO HIGHLIGHT PEICES THAT CAN BE CAPTURE.
+//              NEED TO REMOVE CASUE YET OF NO USE
 function highlightOpponent(id){       //PARAM:- ID OF SQUARE BLOCK
     console.log(id);
     document.getElementById(id).classList.add("capture-highlight");
@@ -136,6 +138,10 @@ function clearHighlight(){
             const parentDiv = document.getElementById(el.id);            
             parentDiv.innerHTML=""
             el.highlight=false;
+        }
+        else if(el.highlightOpponent){
+            document.getElementById(el.id).classList.remove("capture-highlight");   
+            setopponentHighlightState(false);        
         }
         document.getElementById(el.id).classList.remove("whiteHighlight");
     })
