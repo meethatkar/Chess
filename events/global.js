@@ -6,13 +6,24 @@ import { opponenetExits } from "../helper/commonHelper.js";
 // MOVE STATE
 let isMove = null;
 var selfHighlight = null;
+var opponentHighlightState = false;
 
+
+//  GETTER FUNCTIONS
 // function getSelfHighlight(){
 //     return selfHighlight;
 // }
+function getopponentHighlightState(){
+    return opponentHighlightState;
+}
+
+//SETTER FUCNTIONS
 function setSelfHighlight(val){
     selfHighlight = val;
     //MADE THIS FUNCTION SO, 2ND TIME WHEN CLICKED THE CODE WORKS PERFECTLY    
+}
+function setopponentHighlightState(val){
+    opponentHighlightState = val;
 }
 
 //Function that will be executed when white pawn is clicked
@@ -20,10 +31,13 @@ function whitePawnClicked(elem) {
     //HERE {PEICE} TAKE AS ARGS IS KNOW AS DESTRUCTURING
     let peice = elem.peice;    
     var curr_pos = peice.current_pos;
+
+    //   2ND TIME CLICKED, REMOVE HIGHLIGHT STATE
     if(peice == selfHighlight){        
     document.getElementById(curr_pos).classList.remove("whiteHighlight") ;
     clearHighlight();
     selfHighlight = null;
+    // opponentHighlightState = false;             ///when clicked 2nd time on same peice will remove this highligh state
     return;         //WROTE TO STOP FUNCTION EXECUTION HERE ONLY.
     }    
 
@@ -55,6 +69,7 @@ function whitePawnClicked(elem) {
     // WEE RUN WHEN PEICES ARE NOT ON INITAL POSITION
     else{
         
+        //CAPTURE OPPONENT LOGIC
         let col1Num = curr_pos[0].charCodeAt(0);
         let captureIds =[];
         if(col1Num>=98 && col1Num<=103){            
@@ -78,9 +93,17 @@ function whitePawnClicked(elem) {
 
         captureIds.forEach((id)=>{
             if(opponenetExits(id,"white")){
-                highlightSquareIds.push(id);
+                // highlightSquareIds.push(id);
+                console.log(opponentHighlightState);
+                if(opponentHighlightState){
+                    document.getElementById(id).classList.add("capture-highlight");
+                }
+                else{
+                    clearHighlight();
+                }
             }
         })     
+        
         
         highlightSquareIds.push(`${curr_pos[0]}${Number(curr_pos[1]) + 1}`)              //THEY ARE TEMPLATE LITERALS 
         
@@ -107,6 +130,7 @@ function blackPawnClicked(elem) {
     document.getElementById(curr_pos).classList.remove("whiteHighlight") ;
     clearHighlight();
     selfHighlight = null;
+    opponentHighlightState = null;
     return;         //WROTE TO STOP FUNCTION EXECUTION HERE ONLY.
     }    
 
@@ -194,4 +218,4 @@ function globalEvent() {
     })
 }
 
-export { globalEvent,setSelfHighlight };
+export { globalEvent,setSelfHighlight, setopponentHighlightState, getopponentHighlightState };
