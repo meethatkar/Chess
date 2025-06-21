@@ -34,4 +34,7 @@ function opponenetExits(id, color){
     return false;
 }
 
+function captureOpponent(){
+
+}
 export {opponenetExits};

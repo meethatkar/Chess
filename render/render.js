@@ -129,6 +129,12 @@ function renderHighlight(squareID){
     
 }
 
+//function globalStateRender (this function is usedful to render peices from globalStateData) => use when updating globalState
+function globalStateRender(){
+    console.log(globalState);
+    
+}
+
 function clearHighlight(){
     let flatData = globalState.map(row=>row.squareRowArr).flat();
     // console.log(flatData);
@@ -147,4 +153,11 @@ function clearHighlight(){
     })
 }
 
-export {initGameRender, peiceRender, renderHighlight, clearHighlight, movePeice, highlightOpponent};
+export {initGameRender, 
+    peiceRender, 
+    renderHighlight, 
+    clearHighlight, 
+    movePeice, 
+    highlightOpponent,
+    globalStateRender
+}
