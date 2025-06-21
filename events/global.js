@@ -1,6 +1,6 @@
 import { ROOT_DIV } from "../helper/constants.js";
 import { globalState } from "../index.js";
-import { renderHighlight, clearHighlight, movePeice } from "../render/render.js";
+import { renderHighlight, clearHighlight, movePeice, globalStateRender } from "../render/render.js";
 import { opponenetExits } from "../helper/commonHelper.js";
 
 // MOVE STATE
@@ -29,8 +29,12 @@ function setopponentHighlightState(val){
 //Function that will be executed when white pawn is clicked
 function whitePawnClicked(elem) {        
     //HERE {PEICE} TAKE AS ARGS IS KNOW AS DESTRUCTURING
+    globalStateRender();
     let peice = elem.peice;    
     var curr_pos = peice.current_pos;
+
+    const flatArr = globalState.map(rows => rows.squareRowArr).flat();          //made 2D array into 1D array   AND  used .map() to extract squareRowArr from globalState object.    
+
 
     //   2ND TIME CLICKED, REMOVE HIGHLIGHT STATE
     if(peice == selfHighlight){        
@@ -97,6 +101,8 @@ function whitePawnClicked(elem) {
                 console.log(opponentHighlightState);
                 if(opponentHighlightState){
                     document.getElementById(id).classList.add("capture-highlight");
+                    console.log(flatArr);
+                    
                 }
                 else{
                     clearHighlight();
@@ -121,7 +127,11 @@ function whitePawnClicked(elem) {
 }
 
 //Function that will be executed when black pawn is clicked
-function blackPawnClicked(elem) {        
+function blackPawnClicked(elem) {  
+    //when black pawn i s red highlight      
+    if(opponentHighlightState){
+        movePeiceFromXToY(selfHighlight, elem.peice)
+    }
     //HERE {PEICE} TAKE AS ARGS IS KNOW AS DESTRUCTURING
     let peice = elem.peice;
     
@@ -137,6 +147,7 @@ function blackPawnClicked(elem) {
     clearHighlight();
     // debugger;
     selfHighlight = peice;
+
     
     document.getElementById(curr_pos).classList.add("whiteHighlight") ;
     isMove = peice;             // this peice should move '
@@ -174,6 +185,11 @@ function blackPawnClicked(elem) {
     })
     }
 
+}
+
+function movePeiceFromXToY(from,to){
+    console.log(from, to);
+    
 }
 
 //this identifies clicks made on peices.
